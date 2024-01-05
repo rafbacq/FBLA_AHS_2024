@@ -72,10 +72,28 @@ public class PartnerDAO {
             // Step 4: Process the ResultSet object.
             while (rs.next()) {
                 String name = rs.getString("contactName");
+                if(name.matches(".*\\d.*"))
+                {
+                	
+                	
+                }
                 String orgName = rs.getString("orgName");
                 String typOrg = rs.getString("typOrg");
                 String contactEmail = rs.getString("email");
+                if(!contactEmail.contains("@gmail.com")&&
+                   !contactEmail.contains("@yahoo.com")&&
+                   !contactEmail.contains("@hotmail.com")&&
+                   !contactEmail.contains("@icloud.com")&&
+                   !contactEmail.contains("@aol.com"))
+                {
+                	
+                	
+                }
                 String contactPhone = rs.getString("phone");
+                if((contactPhone.matches("\\d+")))
+                {
+                	
+                }
                 partner = new Partner(id, name, orgName, typOrg, contactEmail, contactPhone);
             }
         } catch (SQLException e) {
