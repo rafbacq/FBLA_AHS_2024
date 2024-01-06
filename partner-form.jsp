@@ -12,10 +12,10 @@
         <nav class="navbar navbar-expand-md navbar-dark" style="background-color: green">
             <div>
             <img class="school-logo" src="https://ahs.hcpss.org/sites/default/files/atholtonhs.png" alt="Logo image" style="width:60px">
-                <a href="https://www.javaguides.net" class="navbar-brand"> Partner Management App </a>
+                <a class="navbar-brand" style="color:white"> Partner Management App </a>
             </div>
             <ul class="navbar-nav">
-                <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Register new partner</a></li>
+                <li><a href="<%=request.getContextPath()%>/list" class="nav-link" >Register new partner</a></li>
             </ul>
         </nav>
     </header>

@@ -23,7 +23,9 @@ public class PartnerServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
     private PartnerDAO partnerDAO;
-    
+    /**
+     * Allows FilterType to be defined by one of the database constants
+     */
     enum FilterType {
 		NONE, 
 	    byName,
@@ -32,6 +34,7 @@ public class PartnerServlet extends HttpServlet {
 	    byEmail,
 	    byPhone
 	  }
+    
     private FilterType filterType = FilterType.NONE; 
     /**
      * @see HttpServlet#HttpServlet()
@@ -40,6 +43,13 @@ public class PartnerServlet extends HttpServlet {
     {
     	partnerDAO = new PartnerDAO();
     }
+    /**
+     * Called by the servlet to handle HTTP Post requests
+     * @param request gets the servlet request from the web page
+     * @param response provides HTTP-specific response to web page
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
     	
@@ -75,7 +85,13 @@ public class PartnerServlet extends HttpServlet {
     	
         doGet(request, response);
     }
-	  
+	  /**
+	   * Called by servlet to handle HTPP Get requests
+	   * @param request gets the servlet request from the web page
+	   * @param response provides HTTP-specific response to web page
+	   * @throws ServletException
+	   * @throws IOException
+	   */
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         String action = request.getServletPath();
@@ -130,7 +146,14 @@ public class PartnerServlet extends HttpServlet {
             throw new ServletException(ex);
         }
     }
-
+    /**
+     * Retrieves and dispatches the partner list
+     * @param request gets the servlet request from the web page
+	 * @param response provides HTTP-specific response to web page
+     * @throws SQLException
+     * @throws IOException
+     * @throws ServletException
+     */
     private void listPartner(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {
         List <Partner> listPartner = partnerDAO.selectAllPartners();
@@ -138,6 +161,15 @@ public class PartnerServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("list-partner.jsp");
         dispatcher.forward(request, response);
     }
+    /**
+     * Retrieves and dispatches the specified partner name
+     * @param request gets the servlet request from the web page
+	 * @param response provides HTTP-specific response to web page
+	 * @param inputStr specifies partner
+     * @throws SQLException
+     * @throws IOException
+     * @throws ServletException
+     */
     private void listPartnerByName(HttpServletRequest request, HttpServletResponse response, String inputStr)
 			throws SQLException, IOException, ServletException {
 		List < Partner > listPartner = partnerDAO.selectAllPartners();
@@ -153,6 +185,15 @@ public class PartnerServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("list-partner.jsp");
         dispatcher.forward(request, response);
 	}
+    /**
+     * Retrieves and dispatches the specified partner organization name
+     * @param request gets the servlet request from the web page
+	 * @param response provides HTTP-specific response to web page
+	 * @param inputStr specifies partner
+     * @throws SQLException
+     * @throws IOException
+     * @throws ServletException
+     */
     private void listPartnerByOrgname(HttpServletRequest request, HttpServletResponse response, String inputStr)
 			throws SQLException, IOException, ServletException {
 		List < Partner > listPartner = partnerDAO.selectAllPartners();
@@ -168,6 +209,15 @@ public class PartnerServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("list-partner.jsp");
         dispatcher.forward(request, response);
 	}
+    /**
+     * Retrieves and dispatches the specified partner organization type
+     * @param request gets the servlet request from the web page
+	 * @param response provides HTTP-specific response to web page
+	 * @param inputStr specifies partner
+     * @throws SQLException
+     * @throws IOException
+     * @throws ServletException
+     */
     private void listPartnerByOrgtype(HttpServletRequest request, HttpServletResponse response, String inputStr)
 			throws SQLException, IOException, ServletException {
 		List < Partner > listPartner = partnerDAO.selectAllPartners();
@@ -183,6 +233,15 @@ public class PartnerServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("list-partner.jsp");
         dispatcher.forward(request, response);
 	}
+    /**
+     * Retrieves and dispatches the specified partner email
+     * @param request gets the servlet request from the web page
+	 * @param response provides HTTP-specific response to web page
+	 * @param inputStr specifies partner
+     * @throws SQLException
+     * @throws IOException
+     * @throws ServletException
+     */
     private void listPartnerByEmail(HttpServletRequest request, HttpServletResponse response, String inputStr)
 			throws SQLException, IOException, ServletException {
 		List < Partner > listPartner = partnerDAO.selectAllPartners();
@@ -198,6 +257,15 @@ public class PartnerServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("list-partner.jsp");
         dispatcher.forward(request, response);
 	}
+    /**
+     * Retrieves and dispatches the specified partner phone
+     * @param request gets the servlet request from the web page
+	 * @param response provides HTTP-specific response to web page
+	 * @param inputStr specifies partner
+     * @throws SQLException
+     * @throws IOException
+     * @throws ServletException
+     */
     private void listPartnerByPhone(HttpServletRequest request, HttpServletResponse response, String inputStr)
 			throws SQLException, IOException, ServletException {
 		List < Partner > listPartner = partnerDAO.selectAllPartners();
@@ -215,12 +283,26 @@ public class PartnerServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("list-partner.jsp");
         dispatcher.forward(request, response);
 	}
+    /**
+     * Dispatches a new partner form
+     * @param request gets the servlet request from the web page
+	 * @param response provides HTTP-specific response to web page
+     * @throws IOException
+     * @throws ServletException
+     */
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("partner-form.jsp");
         dispatcher.forward(request, response);
     }
-
+    /**
+     * Dispatches an edit form for the partner
+     * @param request gets the servlet request from the web page
+	 * @param response provides HTTP-specific response to web page
+	 * @throws SQLException
+     * @throws IOException
+     * @throws ServletException
+     */
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -230,7 +312,13 @@ public class PartnerServlet extends HttpServlet {
         dispatcher.forward(request, response);
 
     }
-
+    /**
+     * Dispatches an insert partner form
+     * @param request gets the servlet request from the web page
+	 * @param response provides HTTP-specific response to web page
+     * @throws IOException
+     * @throws SQLException
+     */
     private void insertPartner(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException {
     	
@@ -244,7 +332,13 @@ public class PartnerServlet extends HttpServlet {
         partnerDAO.insertPartner(newPartner);
         response.sendRedirect("list");
     }
-
+    /**
+     * Dispatches an update partner form
+     * @param request gets the servlet request from the web page
+	 * @param response provides HTTP-specific response to web page
+     * @throws IOException
+     * @throws SQLException
+     */
     private void updatePartner(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -258,7 +352,14 @@ public class PartnerServlet extends HttpServlet {
         partnerDAO.updatePartner(book);
         response.sendRedirect("list");
     }
-
+    /**
+     * Dispatches a delete partner form
+     * @param request gets the servlet request from the web page
+	 * @param response provides HTTP-specific response to web page
+	 * @throws ServletException
+     * @throws IOException
+     * @throws SQLException
+     */
     private void deletePartner(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id"));
