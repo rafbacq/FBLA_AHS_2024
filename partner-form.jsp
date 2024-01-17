@@ -60,8 +60,7 @@
                 <fieldset class="form-group">
                     <label>Partner Email</label>
                     <input type="email" value="<c:out value='${partner.contactEmail}' />" class="form-control"
-                        name="contactEmail" required="required" oninput="validateEmail()" autocomplete = "off">
-                    <small class="form-text text-muted" id="emailValidationMsg"></small>
+                        name="contactEmail" required="required" pattern = "^[a-zA-Z0-9_+&*-] + (?:\\.[a-zA-Z0-9_+&*-] + )*@(?:[a-zA-Z0-9-]+\\.) + [a-zA-Z]{2, 7}" autocomplete = "off">
                 </fieldset>
                 <fieldset class="form-group">
                     <label>Partner Phone</label>
@@ -74,36 +73,6 @@
             </div>
         </div>
     </div>
-    <script>
-        function validateEmail() {
-            var emailInput = document.getElementsByName("contactEmail")[0];
-            var emailValidationMsg = document.getElementById("emailValidationMsg");
-            var validDomains = ["@gmail.com", "@hotmail.com", "@yahoo.com", "@aol.com", "@icloud.com"];
-            
-            if (emailInput.checkValidity()) {
-                var isValidDomain = false;
-                for (var i = 0; i < validDomains.length; i++) {
-                    if (emailInput.value.endsWith(validDomains[i])) {
-                        isValidDomain = true;
-                        break;
-                    }
-                }
-                
-                if (isValidDomain) {
-                    emailValidationMsg.textContent = "";
-                } else {
-                    emailValidationMsg.textContent = "Please only use a gmail, hotmail, yahoo, aol, or icloud account.";
-                }
-            } else {
-                emailValidationMsg.textContent = "Please enter a valid email address.";
-            }
-        }
-        
-        function validateForm() {
-            // Additional validation logic if needed
-            validateEmail(); // Validate email before submitting the form
-            return document.getElementById("emailValidationMsg").textContent === ""; // Return false if validation fails
-        }
-    </script>
+  
 </body>
 </html>
