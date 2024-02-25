@@ -12,19 +12,20 @@
 	crossorigin="anonymous">
 </head>
 <body style="background-color: #ebeff3ff;">
-	<header style="text-align:center;">
+	<header style="text-align:center; background-color:#fafafaff;">
 	<br>
 		<img class="school-logo"
 			src="https://ahs.hcpss.org/sites/default/files/atholtonhs.png"
 			alt="Logo image" style="width: 60px"> <a class="navbar-brand"
-			style="color: black"> Atholton Solutions </a>
-
+			style="color: black; font-size:200%; vertical-align:middle;" href="https://ahs.hcpss.org/"> Atholton Solutions </a>
+	<br>
+	<br>
 	</header>
 	<br>
 	<br>
-		<div style="width:64%; height:73%; margin:0 auto;">
-			<div class="card" style="height:100%;">
-				<div class="card-body" style="box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8); text-align:center; height:100%;">
+		<div class="rounded" style="width:54%; height:73%; margin:0 auto;">
+			<div class="card rounded" style="height:100%;">
+				<div class="card-body rounded" style="box-shadow: 5px 5px 10px 2px rgba(0,0,0,.5); text-align:center; height:100%;">
 					<h1 style="height:10%;">Forgot Your Password</h1>
 					<p style="height:10%;">Enter your email to be sent instructions on how to reset your password</p>
 					
@@ -40,7 +41,7 @@
 							Code</button>
 					</div>
 					<div style="text-align: center;  ">
-						<a class="navbar-brand" style="color:CornflowerBlue">Back to Login</a>
+						<a class="navbar-brand" href="<%=request.getContextPath()%>/login-page.jsp" style="color:CornflowerBlue">Back to Login</a>
 					</div>					
 					
 				</div>
