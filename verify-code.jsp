@@ -154,6 +154,26 @@ body {
                 
 	        }
 	    });
+        
+        digit.addEventListener('paste', (e) => {
+        	e.stopPropagation();
+  			e.preventDefault();
+            
+            var clipboard = e.clipboardData || window.clipboardData;
+  			var pasted = clipboard.getData('Text');
+            
+            if(Number(paste) == NaN){
+            	return;
+            }
+            
+            for(var i = ind; i < 6 && i - ind < pasted.length; i++){
+            	digits[i].value = pasted[i - ind];
+                num = num | (1 << i);
+            }
+            
+            setTimeout(() => digits[i-1].focus(), 10);
+        
+        });
 	});
 	
 	
