@@ -1,7 +1,9 @@
 package net.fbla.ahs.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import javax.mail.internet.AddressException;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -9,6 +11,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.Message;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +28,11 @@ import net.fbla.ahs.client.User;
 @WebServlet("/EmailServlet")
 public class EmailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    String verifySubject = "Atholton Solutions: Verify Your Account!";
+    String passwordSubject = "Atholton Solutions: Reset Your Password.";
+    String verifyPage = "Hello. This is an email test.";
+    String passwordPage = "Hello. This is a password test.";
+    
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -40,34 +47,99 @@ public class EmailServlet extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		System.out.println(sendEmail());
+		String action = request.getServletPath();
+		System.out.println(action);
+		System.out.println("Email Servlet is called");
+		
+		switch (action) {
+			case "/EmailServlet/verify":
+				System.out.println("wow");
+				sendVerificationEmail(request, response);
+				break;
+			default:
+				System.out.println("i think it worked");
+				sendVerificationEmail(request, response);
+				break;
+		
+		}
+	
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 	
 	
-	public void sendVerificationEmail(User user) {
-		sendEmail(user, "", "");
+	private void sendVerificationEmail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
+		System.out.println("Made it to Verification Email");
+		String email = request.getParameter("userEmail");
+		System.out.println(email);
+		boolean passed = false;
+			String code = generateCode();
+			System.out.println(code);
+			passed = sendEmail(email, code, verifySubject, verifyPage);
+			
+			if(passed) {
+				
+				request.setAttribute("emailType", "verify");
+				request.setAttribute("code", code);
+				request.setAttribute("email", email);
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher("verify-code.jsp");
+				dispatcher.forward(request, response);
+			}
+		
+			if(!passed) {
+				request.setAttribute("displayInvalidEmail", true);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
+				dispatcher.forward(request, response);
+			}
+			//e.printStackTrace();
+		
 	}
 	
-	public void sendPasswordResetEmail(User user) {
-		sendEmail(user, "", "");
+	private void sendPasswordResetEmail(HttpServletRequest request, HttpServletResponse response) {
+		
 	}
-
-  //this is the class that was supposed to be used. Below is the one I used for testing
-	public boolean sendEmail(User user, String subject, String body) {
+	
+	private void verifyEmail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String email = request.getParameter("email");
+		boolean valid = false;
+		
+		try{
+			valid = testEmail(email);
+		}catch(AddressException ae) {
+			ae.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	private boolean testEmail(String toEmail) throws AddressException{
+		//SEND THE EMAIL RIGHT AWAY INSTEAD
+		try{
+			InternetAddress internetAddress = new InternetAddress(toEmail);
+			internetAddress.validate();
+			return true;
+		}catch(Exception e) {
+			
+		}
+		 return false;
+	}
+	
+	public boolean sendEmail(String toEmail, String code, String body, String message) {
 		boolean sent = false;
 		
-		String toEmail = user.getEmail();
-		String fromEmail = "atholtonsolutions@gmail.com";
-		String password = "1STPLACEFBLA!";
+		String fromEmail = "atholtonsolution@gmail.com";
+		//password refers to the app password
+		String password = "ypwcrhdepyejnaqb";
 		
 		try {
 			Properties props = new Properties();
@@ -76,7 +148,7 @@ public class EmailServlet extends HttpServlet {
 			props.setProperty("mail.smtp.auth", "true");
 			props.setProperty("mail.smtp.starttls.enable", "true");
 			props.put("mail.smtp.socketFactory.port", "587");
-			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		    props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 			
 			Session session = Session.getInstance(props, new Authenticator() {
 				@Override
@@ -87,13 +159,13 @@ public class EmailServlet extends HttpServlet {
 			
 			Message msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(fromEmail));
-			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
+			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 			
-			msg.setSubject(subject);
-			msg.setText(body);
+			msg.setSubject(body);
+			msg.setText(message + " " + code);
 			
 			Transport.send(msg);
-			
+			System.out.println("email sent");
 			sent = true;
 		}catch(Exception ex) {
 			ex.printStackTrace();
@@ -102,49 +174,14 @@ public class EmailServlet extends HttpServlet {
 		return sent;
 		
 	}
-
-  //this is what I was trying to use, it will not work, if you want to implement it look at https://mailtrap.io/blog/sending-email-using-java/, 
-  //we need to create a domain before we can continue, maybe something like @atholtonsolutions.com
-	public boolean sendEmail() {
-		boolean sent = false;
-		
-		String toEmail = "fignugelmu@gufum.com";
-		String fromEmail = "";
-		String username = "8b59a63e386e2e";
-		String password = "1c1f68a8924ddf";
-		
-		try {
-			Properties props = new Properties();
-			props.setProperty("mail.smtp.host", "smtp.mailtrap.io");
-			props.setProperty("mail.smtp.port", "587");
-			props.setProperty("mail.smtp.auth", "true");
-			props.setProperty("mail.smtp.starttls.enable", "true");
-			//props.put("mail.smtp.socketFactory.port", "587");
-		//	props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-			
-			Session session = Session.getInstance(props, new Authenticator() {
-				@Override
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(username, password);
-				}
-			});
-			
-			Message msg = new MimeMessage(session);
-			msg.setFrom(new InternetAddress(fromEmail));
-			msg.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-			
-			msg.setSubject("TEST");
-			msg.setText("testing");
-			
-			Transport.send(msg);
-			
-			sent = true;
-		}catch(Exception ex) {
-			ex.printStackTrace();
+	
+	public String generateCode() {
+		StringBuilder temp = new StringBuilder();
+		for(int i = 0; i < 6; i++) {
+			temp.append((int)(Math.random()*10));
 		}
 		
-		return sent;
-		
+		return temp.toString();
 	}
 
 }
