@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -119,8 +117,8 @@ body {
 						type="number" class="digit" placeholder="0" min="0" max="9"
 						required> <input type="number" class="digit"
 						placeholder="0" min="0" max="9" required> <input
-						type="number" class="digit" placeholder="0" min="0" max="9"
-						required> <input type="number" class="digit"
+ type="number" class="digit" placeholder="0" min="0" max="9"
+						required> <input onfocus="this.value = this.value;" type="number" class="digit"
 						placeholder="0" min="0" max="9" required>
 				
 			</div>
@@ -135,37 +133,29 @@ body {
 
 	<script> 
 	const digits = document.querySelectorAll('.digit');
+    var num = 0;
 	
 	digits[0].focus();
 	
 	digits.forEach((digit, ind) => {
 	    digit.addEventListener('keydown', (e) => {
-	        if(e.key >= 0 && e.key <=9) {
+	        if(e.key >= 0 && e.key <= 9) {
 	            digits[ind].value = '';
-	           	if(isChain(ind-1) == true && isLast(ind+1))
+        		num = num & ((1 << 6)-1) - (1 << ind);
+	           	if(num == (1 << ind)-1)
 	            	setTimeout(() => digits[ind + 1].focus(), 10);
+                    num |= 1 << ind;
 	        } else if(e.key === 'Backspace') {
-	        	if(isChain(ind) == true && isLast(ind+1))
+            	digits[ind].value ='';
+            	num = num & ((1 << 6)-1) - (1 << ind);
+	           	if(num == (1 << ind)-1)
 	            	setTimeout(() => digits[ind - 1].focus(), 10);
+                    
+                
 	        }
 	    });
 	});
 	
-	function isChain(ind){
-		for(var i = ind; i >= 0; i--){
-			if(digits[i].value == '')
-				return false;
-		}
-		return true;
-	}
-	
-	function isLast(ind){
-		for(var i = ind; i <= 5; i++){
-			if(digits[i].value != '')
-				return false;
-		}
-		return true;
-	}
 	
 	//code is a variable that will be passed trust
 	function validate(){
