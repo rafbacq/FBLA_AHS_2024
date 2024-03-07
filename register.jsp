@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -59,15 +62,19 @@
     
     <div class="container">
         <div class="card">
-            <h2 class="text-center mb-4">Register</h2>
-            <form>
+            <h2 class="text-center mb-4" id="test">Register</h2>
+            <form name="registerForm" action="EmailServlet" method="post" onsubmit="return validate()">
                 <div class="form-group">
                     <label for="realName">Your Name</label>
                     <input type="text" class="form-control" id="realName" required pattern="[A-Za-z\s]+" title="Only letters and spaces are allowed" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="userEmail">Email</label>
-                    <input type="email" class="form-control" id="userEmail" required pattern="^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}" autocomplete="off">
+                    <input type="email" class="form-control" name="userEmail" required pattern="^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}" autocomplete="off" oninput="try{setCustomValidity('')}catch(e){}">
+
+                	 <c:if test="${displayInvalidEmail == true}">
+						<small id="validEmail" class="text-danger" style="display: block;">Are you sure this email exists?</small>
+                	</c:if>
                 </div>
                 <div class="form-group">
                     <label for="userPassword">Password</label>
@@ -92,12 +99,58 @@
             var retypePassword = document.getElementById('retypePassword').value;
             var passwordMatch = document.getElementById('passwordMatch');
             
-            if (password !== retypePassword) {
+            if (password !== retypePassword && retypePassword.length != 0) {
                 passwordMatch.style.display = 'block';
-            } else {
+            } else{
                 passwordMatch.style.display = 'none';
             }
         });
+        
+       
+        document.getElementById('userEmail').addEventListener('input', function() {
+           document.getElementById('validEmail').style.display = "none";
+        });
+        
+        
+        function validate() {
+           if( document.getElementById('userPassword').value !== document.getElementById('retypePassword').value){
+        		return false;
+          }
+        	
+          /*
+      	  const emailInput = document.getElementById("userEmail");
+      	  document.getElementById("test").innerHTML = "hello";
+      	  var email = emailInput.value;
+      	  var flag = true;
+      	  
+      	  var xhttp = new XMLHttpRequest();
+      		xhttp.onreadystatechange = function() {
+      			if (this.readyState == 4 && this.status == 200 ) {
+      				  //document.getElementById("test").innerHTML = this.responseText;
+      				document.getElementById("test").innerHTML = "bye";
+      				  if(this.responseText == "true"){
+      					emailInput.setCustomValidity("");
+      					//email should be fine otherwise its not
+      				}else{
+      					emailInput.setCustomValidity("Are you sure this email exists?");
+      				    flag = false;
+      				}
+      				
+      	
+      				emailInput.reportValidity();
+      			}
+      		};
+
+      		xhttp.open("POST", "EmailServlet", true);
+      		xhttp.setRequestHeader("Content-type",
+      				"application/x-www-form-urlencoded");
+      		xhttp.send("email=" + email);
+      	
+			*/
+      	  
+      	  return true;
+      	  
+      	}
     </script>
 
 </body>
