@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
@@ -30,11 +30,11 @@
 		<div class="container col-md-5" style="width:75%;">
 			<div class="card">
 				<div class="card-body rounded" style="background-color:#fafafaff; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
-					<b class="h5">This email is being sent to confirm your creation of an account under the name of Blah Blah</b>
+					<b class="h5">This email is being sent to confirm your creation of an account with Atholton Solutions</b>
 					<br>
-					<p>To confirm this is you, please visit the following link </p>
-					<button class="btn btn-success"> Click here to confirm your account</button>
-					<p>If this was a mistake, please ignore this email </p>
+					<p>Here is your randomly generated six-digit code. Don't share it with anyone! </p>
+					<span class="container-fluid bg-success text-white">?</span>
+					<p>If you dont recognize the name attached to this email, or if this was a mistake, please ignore this email </p>
 				</div>
 			</div>
 			<p>Atholton Solutions</p>
