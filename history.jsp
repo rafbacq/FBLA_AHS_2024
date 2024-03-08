@@ -73,11 +73,14 @@
 	</script>
 
 	<div class="container-fluid p-0">
-		<div class="row no-gutters">
+		<div class="row no-gutters ">
 			<div class="col flex-column">
-				<nav class="navbar navbar-expand-md navbar-dark"
+				<nav class="navbar navbar-expand-md navbar-dark align-items-center"
 					style="background-color: green; align-items:center;">
-					<span id="time" class="h2" style="color: white; text-transform: capitalize;">
+					<form action="list" method="post">
+						<button type="submit" class="btn btn-outline-success border-0"> <image src="https://icon-library.com/images/back-arrow-icon-png/back-arrow-icon-png-1.jpg" alt="go-back" style="vertical-align:middle; width:40px; height:30px;"></button>
+					</form>
+					<span id="time" class="h2" style="color: white; text-transform: capitalize;"> Today, <%=new java.util.Date().toString().substring(4)%>
 					</span>
 					<form class = "ml-auto" action="restore-table" method="post">
 						<button type="submit" class="btn btn-dark ml-auto" id="restore">Restore this Version</button>
@@ -109,6 +112,28 @@
 					</thead>
 
 					<tbody id="table-body">
+					
+					<c:forEach var="partner" items="${listPartner}">
+
+
+
+						<tr>
+
+							<td><c:out value="${partner.id}" /></td>
+
+							<td><c:out value="${partner.contactName}" /></td>
+
+							<td><c:out value="${partner.orgName}" /></td>
+
+							<td><c:out value="${partner.typOrg}" /></td>
+							
+							<td><c:out value="${partner.contactEmail}" /></td>
+							
+							<td><c:out value="${partner.contactPhone}" /></td>
+
+						</tr>
+
+					</c:forEach>
 
 					</tbody>
 
@@ -123,19 +148,19 @@
 				style="background-color: #edf2faff;">
 				<br>
 				<h1 id = "test" style="text-align: center;">Version History</h1>
-				<hr>
-
+				<div class="overflow-auto d-inline">
 				<c:forEach var="table" items="${listTable}">
 					<a href="#"
 						class="list-group-item version-item text-secondary"
 						onclick="loadTable(this)"> <c:if test="${table.length() <= 8}">
-                            Today, <%=new java.util.Date()%>
+                            Today, <%=new java.util.Date().toString().substring(4)%>
 						</c:if> <c:if test="${table.length() > 8}">
 							<span style="text-transform: capitalize;"> ${table} </span>
 						</c:if>
 
 					</a>
 				</c:forEach>
+				</div>
 			</div>
 			<div></div>
 </body>
