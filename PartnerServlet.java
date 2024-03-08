@@ -217,6 +217,11 @@ public class PartnerServlet extends HttpServlet {
 		System.out.println("List Table is being called");
 		List<String> listTable = partnerDAO.listAllTables();
 		request.setAttribute("listTable", listTable);
+		
+		
+		List<Partner> listPartner = partnerDAO.selectAllPartners();
+		request.setAttribute("listPartner", listPartner);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("history.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -224,6 +229,8 @@ public class PartnerServlet extends HttpServlet {
 	private void copyTable(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
 		partnerDAO.savePartners();
+		RequestDispatcher dispatcher = request.getRequestDispatcher("list-partner.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**
