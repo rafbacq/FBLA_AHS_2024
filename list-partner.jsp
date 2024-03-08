@@ -7,7 +7,7 @@
         <html>
       
         <head>
-            <title>Partner Management Application</title>
+            <title>Atholton Solutions</title>
 
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
        		
@@ -204,6 +204,8 @@
 					}
 					
 				}
+				
+				
 			
 			</script>
             <br>       
@@ -215,20 +217,34 @@
 
 
                 <div class="container">
-
+					<div style="display:flex;  flex-direction: row; justify-content: center; align-items: center;">
+					<span style="margin-right: auto; visibility: hidden;"></span>
                     <h3 class="text-center">List of Partners</h3>
-
+                    <form class="d-inline" action="history" method="post" style="margin-left: auto;">
+	                    <button type="submit" class="btn btn-outline-light border-0 text-dark" >
+	    						<img src="https://www.iconbolt.com/iconsets/unicons/history.svg" style="width:25px; height:25px; text-align:right;" alt="Version History">
+	    						History
+						</button>
+					</form>
+					</div>
+					
+					
                     <hr>
 
                     <div class="container text-left">
 
 					 	<a href="<%=request.getContextPath()%>/new" class="btn btn-success"  style="float: left;width:160px">Add New Partner</a>
                         <a href="<%=request.getContextPath()%>/" class="btn btn-success" style="position: relative; left: 12px; width:160px" >List All Partners</a>
-
+						
                     
 
 					<div class="dropdown" style="float: right">
-						<button onclick="myFunction()" class="btn btn-success" class="btn btn-success"  style="width:160px; height:50px">Filter..</button>
+						
+						<button onclick="myFunction()" class="btn btn-success" class="btn btn-success"  style="width:160px; height:50xp">Filter</button>
+						
+						<form class="d-inline" action="save" method="post">
+							<button type="submit" class="btn btn-outline-primary">Save</button>
+						</form>
 						<div id="myDropdown" class="dropdown-content">
 						  
 
