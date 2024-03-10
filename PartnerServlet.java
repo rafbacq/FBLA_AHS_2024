@@ -133,7 +133,7 @@ public class PartnerServlet extends HttpServlet {
 				break;
 			case "/password":
 				
-				System.out.println("trying to reach the password page");
+				System.out.println(request.getParameter("email"));
 				break;
 			case "/restore-table":
 				restoreTable(request, response);
