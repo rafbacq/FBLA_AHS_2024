@@ -225,7 +225,7 @@ public class EmailServlet extends HttpServlet {
 		
 			if(!passed) {
 				request.setAttribute("displayInvalidEmail", true);
-				RequestDispatcher dispatcher = request.getRequestDispatcher("login-page.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("forgot-password.jsp");
 				dispatcher.forward(request, response);
 			}
 	}
