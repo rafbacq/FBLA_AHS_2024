@@ -18,7 +18,7 @@ public class PartnerDAO {
 	
 	private String jdbcURL = "jdbc:mysql://127.0.0.1:3306/atholton_career_tech_ed?allowPublicKeyRetrieval=true&useSSL=false";
     private String jdbcUsername = "root";
-    private String jdbcPassword = "tasouop1";
+    private String jdbcPassword = "";
 
     
     
