@@ -28,18 +28,19 @@
 				<div class="card-body rounded" style="box-shadow: 5px 5px 10px 2px rgba(0,0,0,.5); text-align:center; height:100%;">
 					<h1 style="height:10%;">Forgot Your Password</h1>
 					<p style="height:10%;">Enter your email to be sent instructions on how to reset your password</p>
-					
-					<fieldset class="form-group" style="flex-grow: 1; height: 30%">
-						<input type="text" class="form-control" name="emailInput"
-							required="required" pattern="[A-Za-z\s]+"
-							title="Please enter a valid email." autocomplete="off"
-							placeholder="Email Address" style="font-size: 130%; height:100%; width:50%; margin:0 auto;" >
-					</fieldset>
-					<div style="text-align: center; flex-grow: 1;">
-						<button type="submit" class="btn btn-success"
-							style="font-size: 150%;">Request
-							Code</button>
-					</div>
+					<form method="post" action="EmailServlet" onsubmit="return validateForm()">
+						<fieldset class="form-group" style="flex-grow: 1; height: 30%">
+							<input id="userEmail" type="email" class="form-control" name="emailInput"
+								required="required"
+								title="Please enter a valid email." autocomplete="off"
+								placeholder="Email Address" style="font-size: 130%; height:100%; width:50%; margin:0 auto;" >
+						</fieldset>
+						<div style="text-align: center; flex-grow: 1;">
+							<button type="submit" class="btn btn-success"
+								style="font-size: 150%;">Request
+								Code</button>
+						</div>
+					</form>
 					<div style="text-align: center;  ">
 						<a class="navbar-brand" href="<%=request.getContextPath()%>/login-page.jsp" style="color:CornflowerBlue">Back to Login</a>
 					</div>					
