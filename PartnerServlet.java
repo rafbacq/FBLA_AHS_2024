@@ -99,6 +99,7 @@ public class PartnerServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String action = request.getServletPath();
 		System.out.println("Partner Servlet is called");
+		System.out.println(action);
 		try {
 			switch (action) {
 			case "/new":
@@ -130,8 +131,9 @@ public class PartnerServlet extends HttpServlet {
 				System.out.println("verify");
 				
 				break;
-			case "reset_password":
-				//change the password for the email in the username
+			case "/password":
+				
+				System.out.println("trying to reach the password page");
 				break;
 			case "/restore-table":
 				restoreTable(request, response);
