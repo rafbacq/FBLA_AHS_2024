@@ -179,11 +179,12 @@ body {
 	
 	//code is a variable that will be passed trust
 	function validate(){
+		var temp = '';
 		digits.forEach((digit, ind) => {
-		    if(digit.value != code[ind])
-		    	return false;
+		    temp += digit.value;
 		});
-		return true;
+		
+		return temp == ${code};
 	}
 </script>
 </body>
