@@ -69,6 +69,8 @@
                         title="Enter a 10-digit phone number" autocomplete = "off">
                 </fieldset>
                 <button type="submit" class="btn btn-success">Save</button>
+                 <button type="submit" class="btn btn-success" id="clickCancel" name="clickCancel" formnovalidate>Cancel</button>
+                 
                 </form>
             </div>
         </div>

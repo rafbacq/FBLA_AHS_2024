@@ -113,7 +113,7 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Organization Name</th>
-                            <th>Type of Organization</th>
+                            <th>Organization Type</th>
                             <th>Email</th>
                             <th>Phone</th>
                         </tr>

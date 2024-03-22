@@ -11,9 +11,9 @@
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
 </head>
-<body style="background-color: #f3f3f3ff;" >
+<body style="background-color:#f3f3f3ff;">
 	<header>
-		<nav class="navbar navbar-expand-md navbar-dark"
+	<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: gray">
 			<div>
 				<img class="school-logo"
@@ -24,7 +24,6 @@
 			</div>
 		</nav>
 		<br>
-
 	</header>
 	<div class="d-flex p-2 flex-column">
 		<div class="container col-md-5 my-auto">
@@ -37,7 +36,7 @@
 						class="h1 pl-3" style="margin: auto;">Change your Password</span>
 					<br>
 					<br>
-					<form action="" method="post" onsubmit="return validate()">
+					<form name="confirm-password-reset" action="confirm-password-reset" method="post" onsubmit="return validate()">
 						<fieldset class="form-group" style="flex-grow: 1">
 							<label style="font-size: 130%;">New Password </label> <input
 								type="password" class="form-control" name="userPassword" id="userPassword"
@@ -53,31 +52,34 @@
 								title="Enter your password" autocomplete="off">
 						</fieldset>
 						<small id="passwordMatch" class="text-danger" style="display: none;">Passwords do not match</small>
-					</form>
+					
 					<div style="text-align: center;">
 						<button type="submit" class="btn btn-secondary"
-							style="height: 100%; width: 100%; font-size: 150%;">Confirm</button>
-					</div>
-				</div>
+							style=" width: 100%; font-size: 150%;">Confirm</button>
+				
 			</div>
 		</div>
-	<div>
+	</div>
 	<script>
-		document.getElementById('retypePassword').addEventListener('input', function() {
-	        var password = document.getElementById('userPassword').value;
-	        var retypePassword = document.getElementById('retypePassword').value;
-	        var passwordMatch = document.getElementById('passwordMatch');
-	        
-	        if (password !== retypePassword && retypePassword.length != 0) {
-	            passwordMatch.style.display = 'block';
-	        } else{
-	            passwordMatch.style.display = 'none';
-	        }
-	    });
-		function validate(){
-			return document.getElementById("userPassword").value == document.getElementById("retypePassword").value;
-		}
+	document.getElementById('retypePassword').addEventListener('input', function() {
+        var password = document.getElementById('userPassword').value;
+        var retypePassword = document.getElementById('retypePassword').value;
+        var passwordMatch = document.getElementById('passwordMatch');
+        
+        if (password !== retypePassword && retypePassword.length != 0) {
+            passwordMatch.style.display = 'block';
+        } else{
+            passwordMatch.style.display = 'none';
+        }
+    });
+	function validate() {
+        if( document.getElementById('userPassword').value !== document.getElementById('retypePassword').value){
+     		return false;
+       }
+   	  
+   	  return true;
+   	  
+   	}
 	</script>
-
 </body>
 </html>

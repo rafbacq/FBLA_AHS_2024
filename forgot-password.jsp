@@ -10,7 +10,6 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-
 </head>
 <body style="background-color: white;">
 	<header style="text-align: center; background-color: #42a0d3ff;">
@@ -22,18 +21,18 @@
 	</header>
 	<br>
 	<br>
-	<div class="container-fluid  h-100">
+		<div class="container-fluid  h-100">
 		<div class="row no-gutters h-100">
 
 			<div class="col-3 flex-column">
-				<form method="post" action="EmailServlet"
+				<form method="post" action="EmailServlet-forgot-password"
 					onsubmit="return validateForm()">
 					<h1>Forgot Your Password</h1>
 					<p>Enter your email to be sent instructions on how to reset
 						your password</p>
 
 					<fieldset class="form-group">
-						<input id="userEmail" type="email" class="form-control"
+						<input id="userEmail" name="userEmail" type="email" class="form-control"
 							name="emailInput" required="required"
 							title="Please enter a valid email." autocomplete="off"
 							placeholder="Email Address">
@@ -42,7 +41,11 @@
 						<small id="validEmail" class="text-danger" style="display: block;">Are
 							you sure this email exists?</small>
 					</c:if>
-
+					<c:if test="${noSuchUser == true}">
+						<small id="validEmail" class="text-danger" style="display: block;">No such a user for this email!
+						</small>
+					</c:if>
+					
 					<button type="submit" class="btn btn-success"
 						style="font-size: 150%; width: 100%;">Request Code</button>
 				</form>

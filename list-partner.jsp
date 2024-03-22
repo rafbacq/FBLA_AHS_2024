@@ -44,7 +44,7 @@
 				  background-position: 14px 12px;
 				  background-repeat: no-repeat;
 				  font-size: 16px;
-				  padding: 14px 20px 12px 45px;
+				  ping: 14px 20px 12px 45px;
 				  border: none;
 				  border-bottom: 1px solid #ddd;
 				  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
@@ -111,7 +111,13 @@
                         <li><a href="<%=request.getContextPath()%>/list" class="nav-link">Partners List</a></li>
 
                     </ul>
-
+                   
+					<form class="d-inline" action="logout" method="get" style="margin-left: auto;">
+	                   <div class="navbar-brand"> ${loginUserName}</div>  <button type="submit" class="btn btn-outline-light border-0 text-white" >
+	    						<span style="font-size: 20px">Log out</span>
+						</button>
+					</form>
+					
                 </nav>
 
             </header>
@@ -204,8 +210,6 @@
 					}
 					
 				}
-				
-				
 			
 			</script>
             <br>       
@@ -219,8 +223,10 @@
                 <div class="container">
 					<div style="display:flex;  flex-direction: row; justify-content: center; align-items: center;">
 					<span style="margin-right: auto; visibility: hidden;"></span>
+					
                     <h3 class="text-center">List of Partners</h3>
-                    <form class="d-inline" action="history" method="post" style="margin-left: auto;">
+
+                     <form class="d-inline" action="history" method="post" style="margin-left: auto;">
 	                    <button type="submit" class="btn btn-outline-light border-0 text-dark" >
 	    						<img src="https://www.iconbolt.com/iconsets/unicons/history.svg" style="width:25px; height:25px; text-align:right;" alt="Version History">
 	    						History
@@ -235,20 +241,18 @@
 
 					 	<a href="<%=request.getContextPath()%>/new" class="btn btn-success"  style="float: left;width:160px">Add New Partner</a>
                         <a href="<%=request.getContextPath()%>/" class="btn btn-success" style="position: relative; left: 12px; width:160px" >List All Partners</a>
-						
+						<form class="d-inline" action="save" method="post">
+							<button type="submit" class="btn btn-success" style="position: relative; left: 12px; width:160px">Save List</button>
+						</form>
                     
 
 					<div class="dropdown" style="float: right">
+						<button onclick="myFunction()" class="btn btn-success"style="width:160px; height:50px">Filter...</button>
 						
-						<button onclick="myFunction()" class="btn btn-success" class="btn btn-success"  style="width:160px; height:50xp">Filter</button>
-						
-						<form class="d-inline" action="save" method="post">
-							<button type="submit" class="btn btn-outline-primary">Save</button>
-						</form>
 						<div id="myDropdown" class="dropdown-content">
 						  
 
-			            <form action="${pageContext.request.contextPath}/" method="post">
+			            <form action="${pageContext.request.contextPath}/partners" method="post">
 			            
 	
                            
@@ -307,12 +311,12 @@
 
                                 <th>Organization Name</th>
 
-                                <th>Type of Organization</th>
-
+                                <th>Organization Type</th>
+                               <c:if test = "${isAdmin eq true}">
                                 <th>Email</th>
                                 
                                 <th>Phone</th>
-
+                                </c:if>
 
                             </tr>
 
@@ -321,7 +325,9 @@
                         <tbody>
 
                             <!--   for (Todo todo: todos) {  -->
-
+                    
+					
+				<c:if test = "${not empty loginUser}">
 					<c:forEach var="partner" items="${listPartner}">
 
 
@@ -336,20 +342,23 @@
 
 							<td><c:out value="${partner.typOrg}" /></td>
 							
+							<c:if test = "${isAdmin eq true}">
 							<td><c:out value="${partner.contactEmail}" /></td>
-							
 							<td><c:out value="${partner.contactPhone}" /></td>
-
 							<td><a href="edit?id=<c:out value='${partner.id}' />">Edit</a>
 
 								&nbsp;&nbsp;&nbsp;&nbsp; <a
 
 								href="delete?id=<c:out value='${partner.id}' />">Delete</a></td>
+							</c:if>
 
 						</tr>
 
 					</c:forEach>
-
+				</c:if>
+				<c:if test = "${empty loginUser}">
+					<div style="color:red" id="needLogin" name="needLogin">Need to log in first !!</div>
+				</c:if>
 					<!-- } -->
 
                         </tbody>

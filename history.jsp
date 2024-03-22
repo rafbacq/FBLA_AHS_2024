@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 
 <html>
 <head>
@@ -34,7 +36,7 @@
 			name = name.trim().replaceAll(",", "").replaceAll(" ", "_")
 					.replaceAll(":", "_").toLowerCase();
 			
-			if(name.includes("today")){
+			if(name.includes("current")){
 				name = "partners";
 				document.getElementById("restore").disabled = true;
 			}else{
@@ -80,7 +82,7 @@
 					<form action="list" method="post">
 						<button type="submit" class="btn btn-outline-success border-0"> <image src="https://icon-library.com/images/back-arrow-icon-png/back-arrow-icon-png-1.jpg" alt="go-back" style="vertical-align:middle; width:40px; height:30px;"></button>
 					</form>
-					<span id="time" class="h2" style="color: white; text-transform: capitalize;"> Today, <%=new java.util.Date().toString().substring(4)%>
+					<span id="time" class="h2" style="color: white; text-transform: capitalize;"> Current
 					</span>
 					<form class = "ml-auto" action="restore-table" method="post">
 						<button type="submit" class="btn btn-dark ml-auto" id="restore">Restore this Version</button>
@@ -143,22 +145,26 @@
 
 
 			</div>
-			<div
-				class="col-3 vh-100 nav flex-column list-group-flush border-left border-dark"
+			<div class="col-3 vh-100 border-left border-dark"
 				style="background-color: #edf2faff;">
-				<br>
+				
+				<div>
 				<h1 id = "test" style="text-align: center;">Version History</h1>
+				</div>
+				
 				<div class="overflow-auto d-inline">
+				
 				<c:forEach var="table" items="${listTable}">
+				   <c:if test="${not fn:containsIgnoreCase(table, 'user')}">
 					<a href="#"
 						class="list-group-item version-item text-secondary"
 						onclick="loadTable(this)"> <c:if test="${table.length() <= 8}">
-                            Today, <%=new java.util.Date().toString().substring(4)%>
+                            Current
 						</c:if> <c:if test="${table.length() > 8}">
-							<span style="text-transform: capitalize;"> ${table} </span>
+							<span style="text-transform: capitalize;" >${table} </span>
 						</c:if>
-
 					</a>
+					</c:if>
 				</c:forEach>
 				</div>
 			</div>

@@ -109,7 +109,7 @@ body {
 				We emailed you the six digit code to ${email} <br /> Enter
 				the digit below to confirm your email address
 			</p>
-			<form action="${emailType}" method="post" onsubmit="return validate()">
+			 <form action="${emailType}" method="post" onsubmit="return validate()"> 
 			<div class="digit-container">
 					<input type="number" class="digit" placeholder="0" min="0" max="9"
 						required> <input type="number" class="digit"
@@ -127,9 +127,9 @@ body {
 				<button type="submit" class="btn btn-primary">Verify</button>
 			</div>
 			</form>
-			<small class="info"> If you didn't receive a code <strong>
+			<!--<small class="info"> If you didn't receive a code <strong>
 					RESEND</strong>
-			</small>
+			</small>-->
 
 	<script> 
 	const digits = document.querySelectorAll('.digit');
@@ -179,12 +179,17 @@ body {
 	
 	//code is a variable that will be passed trust
 	function validate(){
-		var temp = '';
-		digits.forEach((digit, ind) => {
-		    temp += digit.value;
-		});
+		let number = ${code};
 		
-		return temp == ${code};
+		let codeArray = number.toString().split("");
+		let ret = true; 
+		debugger;
+		digits.forEach((digit, ind) => {
+		    if(digit.value !== codeArray[ind]) {
+		    	ret = false; 
+		    }
+		});
+		return ret;
 	}
 </script>
 </body>
