@@ -9,7 +9,7 @@ public class SQLConnection {
 	private String jdbcURL = "jdbc:mysql://localhost:3306/atholton_career_tech_ed?allowPublicKeyRetrieval=true&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
 	
     private String jdbcUsername = "root";
-    private String jdbcPassword =""; // "AtownWebFBLA2024!";
+    private String jdbcPassword =""; //idk if this stuff correct tbh
     
     protected Connection getConnection() {
         Connection connection = null;
