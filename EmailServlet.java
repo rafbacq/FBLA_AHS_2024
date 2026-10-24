@@ -91,7 +91,7 @@ public class EmailServlet extends HttpServlet {
 		
 		String fromEmail = "atholtonsolution@gmail.com";
 		//password refers to the app password
-		String password ="ypwcrhdepyejnaqb";
+		String password ="";
 
 		try {
 			Properties props = new Properties();
